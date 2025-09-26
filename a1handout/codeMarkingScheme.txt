@@ -1,0 +1,49 @@
+Code Marking Scheme
+	The following (Doc, Design/Style, Correctness) are weighted according to the assignment.
+		Doc
+			5 - most of the features listed below are present and done well
+			4 -
+			3 - some meaningfull documentation, 50% of the criteria below, done well.
+			2 -
+			1 - nonsense documentation, for example,
+
+				int count; // the count
+				private static ImageBackground ib;      // an instance of this class
+			0 - no documentation
+		Criteria:
+			Documentation should be short, simple and concise. You should not document the obvious (and clutter up your code).
+			class (each class should have a description of its purpose, this should set the tone for the rest of the code, it is also an advertisement, letting other developers know if they should use this class. Finally, it describes any method/class dependencies. See for example the Java Vector class.
+			methods Javadoc describing, given the instance in the proper state, what the method does to the state of the instance and what it returns.
+			method internal doc: Describing how the method does what it does. For simple methods, nothing is necessary, for more complex methods, an algorithm would be good, for complex loops, a loop invariant etc.
+			variables: what they mean and how they relate to eachother. For instance variables one can specify what a consistent state of the collection of instance variables is/means.
+			external design doc: should have an overview for more complex systems. This describes how the collection of classes collaborate to accomplish a task.
+			General: The doc should identify important concepts which lead to a simple solution
+			user doc if necessary, and it is necessary if you can't use their application. How to compile, execute, any environmental restrictions, how to use.
+			general: come up with a simple question, if you have trouble finding the answer, then this is an indication of poor doc or poor code.
+			Design/Style
+				5 - most of the features listed below are present and done well. The result is simple clear, concise code. This looks like the problem was solved once, then simplified after identifying the key concepts and using them to great advantage.
+				4 -
+				3 - 50% of the features below done correctly. The system is naieve and overly complex. The problem is not well digested, the system does not utilize tools effectively, it is not as flexible as possible. It is what the 'good developer' throws together on the first try.
+				2 -
+				1 - no real evidence of understanding of the use of the tools or of the problem that the tools are supposed to solve. This is what the beginning developer throws together just to get a functioning system.
+			Criteria:
+				No magic constants. A constant is not magic if it is well understood by programmers writing similar applications. For example, the constants used to extract R,G,B from a pixel (in Java using getPixel) are not magic.
+				Good names for methods in proper place
+				proper use of local, instance and static variables. Static should represent the minority of the variables and methods in general.
+				proper use of protection (general rule is private instance vars, some public methods).
+				Algorithms are clear and well digested at the proper level (use of helper methods when necessary).
+				Good variable, class and method names, short, meaningfull.
+				Should be flexable, well organized and at the right level of abstraction etc.
+				OO: Good class organization, the right set of classes are defined and interact (containment, inheritence). Good collection of classes to capture the right concepts at the right level of abstraction to create simple code. Classes have a clear, natural, well defined purpose. Use of design patterns where appropriate.
+				Other tools: use of arrays, instance vars etc. leading to simple, clear, concise code.
+				Good collection of methods capturing the right functionality. Methods have a clear, natural, well defined purpose.
+				Code is overall, simple, clear and concise, well thought through.
+		Correctness (dependent more specifically on the problem)
+			Functional
+				Compiles
+				Features ...
+			Non-functional
+				Speed
+				Space
+				User interface
+				Fault tolerance (does not fall over)

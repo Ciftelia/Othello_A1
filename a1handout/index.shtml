@@ -1,0 +1,289 @@
+
+
+    <title>EECS3311: Assignments</title>
+  </head>
+  
+  <body>
+    
+  
+
+    <div class="content">
+
+      <h2>Assignment 1</h2>
+
+<table>
+<tr><th align=left>Due:</th>
+<td> See eclass.
+</td></tr>
+<tr><th align=left>Hand in:</th><td>  
+	A zipped copy of the project on eclass.
+</td></tr>
+<tr><th align=left>Marking:</th><td> 
+	See marking rubric, published separately.
+</td></tr>
+<tr><th align=left>Groups:</th><td> You may work in groups of two if desired. In this case, one of the members creates the group, and inform the other to join. Please do not join random groups without explicit permission of the person who is already there. You are allowed to work only with students within your official section.</td></tr>
+</table>
+</center>
+
+<h1>Othello</h1>
+You will implement the two player game <a href=https://www.youtube.com/watch?v=Ol3Id7xYsY4>Othello</a>. 
+Your implementation will include a whole collection of features, including
+	<ul>
+	<li> Human VS Human play
+	<li> Human VS Computer (with both Greedy and Random strategies)
+	<li> An investigation into the effectiveness of Greedy and Random strategies.
+	</ul>
+You can find starter code on eclass. Your job will be to complete the supplied classes
+using Java features to effectively create simple, clear, concise code. If it just works, but is not simple,
+clear, concise, your mark will be at most 80%. You should use OO features such as inheritance, interfaces,
+abstract classes as appropriate to create flexible code without duplicating code. 
+You may not remove methods provided, you can add more private methods if you like and modify
+protections if it makes sense. You can also add additional classes and move method bodies to super classes
+etc.  Use static and instance variables/methods as appropriate, with appropriate protections. Appropriately
+document your code.
+<h3>Test Cases</h3>
+We have provided some JUnit test cases in youra1 project. To run them, select the class 
+<code>othellotest</code> and run as a JUnit test. When you are finished,
+all testcases should pass.
+
+<h3>Sample Outputs</h3>
+This section gives you some sample inputs and outputs to test your code against.
+<ul>
+<li> <a href=othelloBoardOutput.txt>othelloBoardOutput.txt</a> is the result of running the main method of OthelloBoard.
+
+<li> The following are sample outputs for the main method of Othello. Since the moves are generated randomly, 
+	don't expect your output to match.
+	<ul>
+	<li> <a href=gameOthelloMainA.txt>gameOthelloMainA.txt</a>, this is an actual output from Othello.main
+	<li> <a href=gameOthelloMainB.txt>gameOthelloMainB.txt</a>, this is an actual output from Othello.main
+	</ul>
+<li> 
+	The following are sample outputs for OthelloControllerHumanVSHuman
+	<ul>
+	<li> <a href=game0.txt>game0.txt</a> resulting from <a href=game0moves.txt>game0moves.txt</a>
+	<li> <a href=game1.txt>game1.txt</a> resulting from <a href=game1moves.txt>game1moves.txt</a>
+	<li> <a href=game2.txt>game2.txt</a> resulting from <a href=game2moves.txt>game2moves.txt</a>
+	<li> <a href=game3.txt>game3.txt</a> resulting from <a href=game3moves.txt>game3moves.txt</a>
+	</ul>
+	When using Eclipse, you can run game0moves.txt by 
+	<xmp>
+	Run -> Run Configurations -> Common (tab)
+	See the Standard Input and Output window, check Input File
+	and then browse to game0moves.txt.
+	Finally, run OthelloControllerHumanVSHuman, your output should
+	match mine. Alternatively, you can type in the row,column pairs directly
+	in the console by hand, and see if your output matches mine.
+	Finally, if you are running from the command line, you would
+
+	java OthelloControllerHumanVSHuman < game0moves.txt
+	</xmp>
+<li> The following are sample runs of OthelloControllerHumanVSGreedy. Your output should be identical.
+	<ul>
+	<li> <a href=game4.txt>game4.txt</a> (you can run this via <a href=game4moves.txt>game4moves.txt</a>)
+	<li> <a href=game5.txt>game5.txt</a> (you can run this via <a href=game5moves.txt>game5moves.txt</a>)
+	</ul>
+<li> The output of OthelloControllerHumanVSRandom looks like OthelloControllerHumanVSGreedy except
+	the same Human inputs can result in different Random moves.
+</ul>
+
+<h3>Tasks</h3>
+Remember, something will go wrong, it always does! Please work systematically!
+<ol>
+<li> Finish all easy methods in class OthelloBoard
+	<code>otherPlayer, validCoordinate, getCount, ...</code>
+<li> Work on medium methods in class OthelloBoard
+	<code>alternation, ...</code>
+<li> Work on hard methods in class OthelloBoard
+	<code>flip, hasMove, move, ...</code>
+<li> Work on methods in class Othello. The goal is to get the Othello.main running.
+<li> Once Othello.main works, OthelloControllerHumanVSHuman.main should work!
+	Try playing yourself etc.
+<li> Implement PlayerGreedy, then OthelloControllerHumanVSGreedy.
+<li> Implement PlayerRandom, then OthelloControllerHumanVSRandom.
+<li> Implement OthelloControllerRandomVSGreedy.
+<li> Implement OthelloControllerRandomVSRandom.
+<li> complete <code>randomVsRandomReport.txt</code>
+<li> Refactor, make sure code is simple, clear, concise, nice, all documentation is great.
+<li> <b>Submit!</b>
+</ol>
+
+<h3>Environment</h3>
+<b>You should build and run your code using Eclipse.
+Code that does not run in this environment will not be marked! 
+We are using Java 21 for this assignment. Please do not use any newer java version.
+</b>
+<xmp>
+Run eclipse on your system
+File -> Import -> Projects from Folder or Archive
+Next
+# Click Directory and then navigate to your a1
+# make sure Search for nested projects and Detect and configure project natures
+# are checked
+Finish
+# You should see a1 appear in the package explorer
+</xmp>
+</p>
+
+<h3>Questions and Answers</h3>
+<dl>
+<dt><font color=red><b>Question:</b></font></dt>
+        <dd>
+<xmp>
+Can I have some examples for the flip method?
+</xmp>
+        </dd>
+<dt><font color=green><b>Answer:</b></font></dt>
+        <dd>
+<xmp>
+Testing flip method: before
+  0 1 2 3 4 5 6 7 
+ +-+-+-+-+-+-+-+-+
+0|O|O|O|O|O|O|O| |0
+ +-+-+-+-+-+-+-+-+
+1| |O|O|O|O|O|O|O|1
+ +-+-+-+-+-+-+-+-+
+2| | |O|O|O|O|O|X|2
+ +-+-+-+-+-+-+-+-+
+3| | | |O|O|O|O|X|3
+ +-+-+-+-+-+-+-+-+
+4| | | | |X|O|O|X|4
+ +-+-+-+-+-+-+-+-+
+5| | | | | |O|O|X|5
+ +-+-+-+-+-+-+-+-+
+6| | | | | | |O|X|6
+ +-+-+-+-+-+-+-+-+
+7| | | | | | | |X|7
+ +-+-+-+-+-+-+-+-+
+  0 1 2 3 4 5 6 7 
+
+flip(0,4,0,1, P1)=-1
+flip(1,4,0,1, P1)=-1
+flip(2,4,0,1, P1)=3
+flip(3,4,0,1, P1)=3
+flip(4,4,0,1, P1)=0
+flip(5,4,0,1, P1)=-1
+flip(6,4,0,1, P1)=-1
+flip(7,4,0,1, P1)=-1
+
+Testing flip method: after
+  0 1 2 3 4 5 6 7 
+ +-+-+-+-+-+-+-+-+
+0|O|O|O|O|O|O|O| |0
+ +-+-+-+-+-+-+-+-+
+1| |O|O|O|O|O|O|O|1
+ +-+-+-+-+-+-+-+-+
+2| | |O|O|X|X|X|X|2
+ +-+-+-+-+-+-+-+-+
+3| | | |O|X|X|X|X|3
+ +-+-+-+-+-+-+-+-+
+4| | | | |X|O|O|X|4
+ +-+-+-+-+-+-+-+-+
+5| | | | | |O|O|X|5
+ +-+-+-+-+-+-+-+-+
+6| | | | | | |O|X|6
+ +-+-+-+-+-+-+-+-+
+7| | | | | | | |X|7
+ +-+-+-+-+-+-+-+-+
+  0 1 2 3 4 5 6 7 
+</xmp>
+        </dd>
+<dt><font color=red><b>Question:</b></font></dt>
+        <dd>
+Can I see an example of OthelloBoard.alternation and OthelloBoard.hasMove?
+        </dd>
+<dt><font color=green><b>Answer:</b></font></dt>
+        <dd>
+<xmp>
+  0 1 2 3 4 5 6 7 
+ +-+-+-+-+-+-+-+-+
+0|O|O|O|O|O|O|O| |0
+ +-+-+-+-+-+-+-+-+
+1| |O|O|O|O|O|O|O|1
+ +-+-+-+-+-+-+-+-+
+2| | |O|O|X|X|X|X|2
+ +-+-+-+-+-+-+-+-+
+3| | | |O|X|X|X|X|3
+ +-+-+-+-+-+-+-+-+
+4| | | | |X|O|O|X|4
+ +-+-+-+-+-+-+-+-+
+5| | | | | |O|O|X|5
+ +-+-+-+-+-+-+-+-+
+6| | | | | | |O|X|6
+ +-+-+-+-+-+-+-+-+
+7| | | | | | | |X|7
+ +-+-+-+-+-+-+-+-+
+  0 1 2 3 4 5 6 7 
+
+Testing alternation:
+alternation(0,0,0,1)= 
+alternation(1,1,0,1)= 
+alternation(2,2,0,1)=X
+alternation(3,3,0,1)=X
+alternation(4,4,0,1)=O
+alternation(5,5,0,1)=X
+alternation(6,6,0,1)=X
+alternation(7,7,0,1)= 
+alternation(0,-1,0,1)= 
+alternation(1,0,0,1)= 
+alternation(2,1,0,1)= 
+alternation(3,2,0,1)= 
+alternation(4,3,0,1)= 
+alternation(5,4,0,1)= 
+alternation(6,5,0,1)= 
+alternation(7,6,0,1)= 
+Testing hasMove:
+hasMove(0,0,0,1)= 
+hasMove(1,1,0,1)= 
+hasMove(2,2,0,1)= 
+hasMove(3,3,0,1)= 
+hasMove(4,4,0,1)= 
+hasMove(5,5,0,1)= 
+hasMove(6,6,0,1)= 
+hasMove(7,7,0,1)= 
+hasMove(0,-1,0,1)= 
+hasMove(1,0,0,1)= 
+hasMove(2,1,0,1)=X
+hasMove(3,2,0,1)=X
+hasMove(4,3,0,1)=O
+hasMove(5,4,0,1)=X
+hasMove(6,5,0,1)=X
+hasMove(7,6,0,1)= 
+</xmp>
+        </dd>
+<dt><font color=red><b>Question:</b></font></dt>
+        <dd>
+	In JUnit4 tests, is the setup method run before each test?
+        </dd>
+<dt><font color=green><b>Answer:</b></font></dt>
+        <dd>
+	Yes.
+        </dd>
+<dt><font color=red><b>Question:</b></font></dt>
+        <dd>
+	For OthelloBoardTest, what does the setup method do?
+        </dd>
+<dt><font color=green><b>Answer:</b></font></dt>
+        <dd>
+	See <a href=othelloBoardSetup.txt>othelloBoardSetup.txt</a>
+        </dd>
+<dt><font color=red><b>Question:</b></font></dt>
+        
+<dt><font color=red><b>Question:</b></font></dt>
+        <dd>
+How much of the code can I change?
+        </dd>
+<dt><font color=green><b>Answer:</b></font></dt>
+        <dd>
+You should not break any
+of the tests, not break any of the mains. You should
+modify the code to make it better, add methods, classes,
+modify access to methods, change things to/from static
+as it makes sense. Only do it if it makes the code better,
+but do it if it makes it better.
+        </dd>
+
+</dl>
+
+      </div>
+
+        
