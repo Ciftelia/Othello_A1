@@ -18,6 +18,20 @@ public class Othello {
 	public static final int DIMENSION = 8; // This is an 8x8 game
 	private char whosTurn = OthelloBoard.P1; // P1 moves first!
 	private int numMoves = 0;
+	private final OthelloBoard board;
+	
+	
+	
+	/*
+	 * Constructor
+	 */
+	
+	public Othello() {
+		this.board = new OthelloBoard(DIMENSION);
+	}
+	
+	
+	
 
 	/**
 	 * return P1,P2 or EMPTY depending on who moves next.
@@ -25,7 +39,8 @@ public class Othello {
 	 * @return P1, P2 or EMPTY
 	 */
 	public char getWhosTurn() {
-		return ' ';
+		if (isGameOver()) {return OthelloBoard.EMPTY;}
+		else {return whosTurn;}
 	}
 
 	/**
@@ -38,6 +53,21 @@ public class Othello {
 	 * @return whether the move was successfully made.
 	 */
 	public boolean move(int row, int col) {
+		if (isGameOver()) {return false;}
+		
+		boolean move = board.move(row, col, whosTurn);
+		
+		if (move) {return false;}
+		else {
+			char whosMove = board.hasMove();
+			if (whosMove == OthelloBoard.BOTH) {
+				whosTurn = OthelloBoard.otherPlayer(whosTurn);
+			}
+			else {
+				whosTurn = whosMove;
+			}
+		}
+		
 		return true;
 	}
 
@@ -47,7 +77,7 @@ public class Othello {
 	 * @return the number of tokens for player on the board
 	 */
 	public int getCount(char player) {
-		return 0;
+		return board.getCount(player);
 	}
 
 	/**
@@ -56,7 +86,19 @@ public class Othello {
 	 * @return P1, P2 or EMPTY for no winner, or the game is not finished.
 	 */
 	public char getWinner() {
-		return OthelloBoard.EMPTY;
+		
+		if (!isGameOver()) {
+			return OthelloBoard.EMPTY;
+		}
+		
+		else {
+			int a = board.getCount(OthelloBoard.P1);
+			int b = board.getCount(OthelloBoard.P2);
+			
+			if (a > b) {return OthelloBoard.P1;}
+			else if (b > a) {return OthelloBoard.P2;}
+			else {return OthelloBoard.EMPTY;}
+		}
 	}
 
 	/**
@@ -64,7 +106,7 @@ public class Othello {
 	 * @return whether the game is over (no player can move next)
 	 */
 	public boolean isGameOver() {
-		return true;
+		return board.hasMove() == OthelloBoard.EMPTY;
 	}
 
 	/**
@@ -72,7 +114,12 @@ public class Othello {
 	 * @return a string representation of the board.
 	 */
 	public String getBoardString() {
-		return "";
+		return board.toString();
+	}
+	
+	
+	public OthelloBoard getboard() {
+		return board;
 	}
 
 	/**
