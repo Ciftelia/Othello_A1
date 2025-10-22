@@ -52,24 +52,24 @@ public class Othello {
 	 * @param col
 	 * @return whether the move was successfully made.
 	 */
-	public boolean move(int row, int col) {
-		if (isGameOver()) {return false;}
-		
-		boolean move = board.move(row, col, whosTurn);
-		
-		if (move) {return false;}
-		else {
-			char whosMove = board.hasMove();
-			if (whosMove == OthelloBoard.BOTH) {
-				whosTurn = OthelloBoard.otherPlayer(whosTurn);
-			}
-			else {
-				whosTurn = whosMove;
-			}
-		}
-		
-		return true;
-	}
+    public boolean move(int row, int col) {
+        if (isGameOver()) {return false;}
+
+        boolean move = board.move(row, col, whosTurn);
+
+        if (!move) {return false;}
+        else {
+            numMoves++;
+            char whosMove = board.hasMove();
+            if (whosMove == OthelloBoard.BOTH) {
+                whosTurn = OthelloBoard.otherPlayer(whosTurn);
+            }
+            else {
+                whosTurn = whosMove;
+            }
+        }
+        return true;
+    }
 
 	/**
 	 * 
