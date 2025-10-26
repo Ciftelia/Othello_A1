@@ -91,7 +91,6 @@ public class OthelloBoard {
      *         alternation P1 ... P1 P2 in direction (dx,dy), EMPTY if there is no
      *         alternation
      */
-
     private char alternation(int row, int col, int drow, int dcol) {
 
         if(!validCoordinate(row, col) || board[row][col] == EMPTY || (dcol == 0 && drow == 0)) return EMPTY;
@@ -106,10 +105,7 @@ public class OthelloBoard {
 
     }
 
-
-
-
-    /* We will use the public helper method to access the private alteration method
+    /** We will use the public helper method to access the private alteration method
      *
      * @param row  starting row, in {0,...,dim-1} (typically {0,...,7})
      * @param col  starting col, in {0,...,dim-1} (typically {0,...,7})
@@ -119,12 +115,9 @@ public class OthelloBoard {
      *         alternation P1 ... P1 P2 in direction (dx,dy), EMPTY if there is no
      *         alternation
      */
-
-
     public char Access_Alternation(int row, int col, int drow, int dcol) {
         return alternation(row,dcol,drow,dcol); // corrected
     }
-
 
     /**
      * flip all other player tokens to player, starting at (row,col) in direction
@@ -194,8 +187,6 @@ public class OthelloBoard {
         return hasAnyMove(P2) ? BOTH : P1;
 
     }
-
-
 
     // Applying helper method 
     private boolean hasAnyMove(char player) {
