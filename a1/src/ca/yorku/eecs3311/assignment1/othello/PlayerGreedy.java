@@ -1,61 +1,51 @@
 package ca.yorku.eecs3311.assignment1.othello;
 
 /**
- * PlayerGreedy makes a move by considering all possible moves that the player
- * can make. Each move leaves the player with a total number of tokens.
- * getMove() returns the first move which maximizes the number of
- * tokens owned by this player. In case of a tie, between two moves,
- * (row1,column1) and (row2,column2) the one with the smallest row wins. In case
- * both moves have the same row, then the smaller column wins.
- * 
- * Example: Say moves (2,7) and (3,1) result in the maximum number of tokens for
- * this player. Then (2,7) is returned since 2 is the smaller row.
- * 
- * Example: Say moves (2,7) and (2,4) result in the maximum number of tokens for
- * this player. Then (2,4) is returned, since the rows are tied, but (2,4) has
- * the smaller column.
- * 
- * See the examples supplied in the assignment handout.
- * 
- *
+ * Greedy player: choose the legal move that maximizes the immediate number of
+ * flipped opponent discs (no lookahead). Ties are broken by smaller row, then
+ * smaller column. Evaluation is non-mutating; the real board is not changed here.
  */
-
 public class PlayerGreedy {
 
     private final Othello othello;
+    private final char me;
 
-    public PlayerGreedy(Othello othello) {
+    // 8 directions (row, col) to scan from a candidate square
+    private static final int[][] DIRS = {
+            {-1,-1}, {-1,0}, {-1,1},
+            { 0,-1},         { 0,1},
+            { 1,-1}, { 1,0}, { 1,1}
+    };
+
+    public PlayerGreedy(Othello othello, char player) {
         this.othello = othello;
+        this.me = player;
     }
 
     /**
-     * Choose the legal move that maximizes the immediate number of tokens owned
-     * by the current player (equivalently: maximizes flipped discs).
-     * Tie-breaker: smaller row first; if rows tie, smaller column.
+     * Returns the greedy move (row, col) or null if no legal move exists for this player.
+     * Legal = flips >= 1 in at least one direction.
      */
     public Move getMove() {
         if (othello == null) return null;
-
-        OthelloBoard board = othello.getboard(); // accessor present in Othello.java
+        OthelloBoard board = othello.getboard();
         if (board == null) return null;
 
-        char me = othello.getWhosTurn();
-        if (me == OthelloBoard.EMPTY) return null; // game over / nobody to move
-
-        int dim = board.getDimension();
+        final int dim = board.getDimension();
 
         int bestFlips = -1;
-        int bestRow = -1, bestCol = -1;
+        int bestRow = 0, bestCol = 0;
 
         for (int r = 0; r < dim; r++) {
             for (int c = 0; c < dim; c++) {
-                // skip if not empty
                 if (board.get(r, c) != OthelloBoard.EMPTY) continue;
 
-                int flips = countFlipsIfPlayed(board, r, c, me);
-                if (flips <= 0) continue; // illegal move (must flip at least one)
+                int flips = potentialFlips(board, r, c, me);
+                if (flips <= 0) continue; // not a legal move
 
-                if (flips > bestFlips || (flips == bestFlips && (r < bestRow || (r == bestRow && c < bestCol)))) {
+                // argmax with tie-break: smaller row, then smaller col
+                if (flips > bestFlips ||
+                        (flips == bestFlips && (r < bestRow || (r == bestRow && c < bestCol)))) {
                     bestFlips = flips;
                     bestRow = r;
                     bestCol = c;
@@ -63,46 +53,39 @@ public class PlayerGreedy {
             }
         }
 
-        if (bestFlips < 0) {
-            // no legal moves
-            return null;
-        }
-        return new Move(bestRow, bestCol);
+        return (bestFlips > 0) ? new Move(bestRow, bestCol) : null;
     }
 
-
-    private int countFlipsIfPlayed(OthelloBoard board, int row, int col, char me) {
+    //Total discs that would flip if 'me' plays (row,col); 0 means illegal.
+    private int potentialFlips(OthelloBoard board, int row, int col, char me) {
         if (board.get(row, col) != OthelloBoard.EMPTY) return 0;
 
+        final int dim = board.getDimension();
+        final char opp = OthelloBoard.otherPlayer(me);
+
         int total = 0;
-        int dim = board.getDimension();
-        char opp = OthelloBoard.otherPlayer(me);
-
-        for (int dRow = -1; dRow <= 1; dRow++) {
-            for (int dCol = -1; dCol <= 1; dCol++) {
-                if (dRow == 0 && dCol == 0) continue;
-
-                int r = row + dRow, c = col + dCol;
-                int inBetween = 0;
-
-                // First, we need at least one opponent disc
-                while (inBounds(r, c, dim) && board.get(r, c) == opp) {
-                    inBetween++;
-                    r += dRow;
-                    c += dCol;
-                }
-
-                // Valid line if we saw >=1 opp disc and ended on our own disc
-                if (inBetween > 0 && inBounds(r, c, dim) && board.get(r, c) == me) {
-                    total += inBetween;
-                }
-            }
+        for (int[] d : DIRS) {
+            total += flipsInDirection(board, row, col, d[0], d[1], me, opp, dim);
         }
         return total;
+    }
+
+    //Count flips along one direction (dr,dc); returns 0 if not bracketed.
+    private int flipsInDirection(OthelloBoard board, int row, int col,
+                                 int dr, int dc, char me, char opp, int dim) {
+        int r = row + dr, c = col + dc, seen = 0;
+
+        // must encounter ≥1 opponent first
+        while (inBounds(r, c, dim) && board.get(r, c) == opp) {
+            seen++;
+            r += dr; c += dc;
+        }
+
+        // legal if the run of opponent discs is followed by our own piece
+        return (seen > 0 && inBounds(r, c, dim) && board.get(r, c) == me) ? seen : 0;
     }
 
     private boolean inBounds(int r, int c, int dim) {
         return r >= 0 && r < dim && c >= 0 && c < dim;
     }
 }
-
