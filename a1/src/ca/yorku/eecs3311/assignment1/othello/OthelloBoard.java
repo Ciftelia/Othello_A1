@@ -91,7 +91,6 @@ public class OthelloBoard {
      *         alternation P1 ... P1 P2 in direction (dx,dy), EMPTY if there is no
      *         alternation
      */
-
     private char alternation(int row, int col, int drow, int dcol) {
 
         if(!validCoordinate(row, col) || board[row][col] == EMPTY || (dcol == 0 && drow == 0)) return EMPTY;
@@ -106,10 +105,7 @@ public class OthelloBoard {
 
     }
 
-
-
-
-    /* We will use the public helper method to access the private alteration method
+    /** We will use the public helper method to access the private alteration method
      *
      * @param row  starting row, in {0,...,dim-1} (typically {0,...,7})
      * @param col  starting col, in {0,...,dim-1} (typically {0,...,7})
@@ -119,12 +115,9 @@ public class OthelloBoard {
      *         alternation P1 ... P1 P2 in direction (dx,dy), EMPTY if there is no
      *         alternation
      */
-
-
     public char Access_Alternation(int row, int col, int drow, int dcol) {
         return alternation(row,dcol,drow,dcol); // corrected
     }
-
 
     /**
      * flip all other player tokens to player, starting at (row,col) in direction
@@ -195,8 +188,6 @@ public class OthelloBoard {
 
     }
 
-
-
     // Applying helper method 
     private boolean hasAnyMove(char player) {
         // We can reuse existing helper by checking if it ever reports `player`
@@ -233,9 +224,9 @@ public class OthelloBoard {
         // HINT: Use some of the above helper methods to get this methods
         // job done!!
 
-
+    	// check if valid generally
         if (!validCoordinate(row,col) || board[row][col]!=EMPTY) {return false;}
-
+        
         int score = 0;
 
         for (int drow = -1; drow < 2; drow++) {
@@ -244,7 +235,7 @@ public class OthelloBoard {
 
                 else if (hasMove(row,col,drow,dcol) == player) {
                     board[row][col] = player;
-                    score+= flip(row+drow, col+dcol, drow, dcol,player);
+                    score+= flip(row+drow, col+dcol, drow, dcol, player);
                 }
 
             }

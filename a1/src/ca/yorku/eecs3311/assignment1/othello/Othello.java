@@ -29,9 +29,6 @@ public class Othello {
 	public Othello() {
 		this.board = new OthelloBoard(DIMENSION);
 	}
-	
-	
-	
 
 	/**
 	 * return P1,P2 or EMPTY depending on who moves next.

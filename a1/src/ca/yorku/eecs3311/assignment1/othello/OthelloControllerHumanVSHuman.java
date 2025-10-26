@@ -33,9 +33,17 @@ public class OthelloControllerHumanVSHuman {
 				move = player1.getMove();
 			if (whosTurn == OthelloBoard.P2)
 				move = player2.getMove();
-
-			this.reportMove(whosTurn, move);
-			othello.move(move.getRow(), move.getCol());
+			
+			boolean moveAccepted = othello.move(move.getRow(), move.getCol());
+			if (!moveAccepted) {
+				System.out.println("Invalid Move: Please Try Again");
+			}
+			else {
+				this.reportMove(whosTurn, move);
+			}
+			
+			
+			
 		}
 		this.reportFinal();
 	}
