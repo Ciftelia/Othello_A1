@@ -233,9 +233,9 @@ public class OthelloBoard {
         // HINT: Use some of the above helper methods to get this methods
         // job done!!
 
-
+    	// check if valid generally
         if (!validCoordinate(row,col) || board[row][col]!=EMPTY) {return false;}
-
+        
         int score = 0;
 
         for (int drow = -1; drow < 2; drow++) {
@@ -244,7 +244,7 @@ public class OthelloBoard {
 
                 else if (hasMove(row,col,drow,dcol) == player) {
                     board[row][col] = player;
-                    score+= flip(row+drow, col+dcol, drow, dcol,player);
+                    score+= flip(row+drow, col+dcol, drow, dcol, player);
                 }
 
             }
