@@ -3,19 +3,38 @@ RandomVSRandom Report
 1) What is your conclusion, does the first or
 second player have some advantage, at least for a random strategy? 
 
+-- The games starts in the balanced state, and neither uses strategy, randomness doesn't favour one side over the other.
+   After many repeated games, wins tends to even out between two players. So, far this assignment, we can safely assume 
+   that both players have the same likelihood of winning when they play randomly.
+
 2) Watch https://www.youtube.com/watch?v=Iq9DzN6mvYA
 
 3) Briefly write your thoughts on the above video below:
+-- The video highlights how important is to set up a proper null hypothesis and use the right statistical test
+   when checking whether a difference is meaningful. A p-value doesn’t prove one strategy is better, it just tell
+   us how surprising our data would be if there were no difference.
+   
+   For this assignment, that supports using a two-proportion z-test on the Random-vs-Random results instead of eyeballing percentages.
+   This method also keeps the simulation separate from the statistics: first, run independent game trials. Then, examine whether any 
+   win-rate gap is too large to be due to chance. Confidence intervals help show how sure we are about the results as well.
+   
 
-4) H0 is 
 
-5) Ha is 
+
+
+
+4) H0 is p1=p2 ; p1 = Probability (Player1-random) wins, p2 = Probability (Player2-random) wins
+
+5) Ha is p1!=p2
 
 6) Choose one of the following and delete the other:
    My experimental results support H0, so they do not support Ha
-   My experimental results do not support H0, so they support Ha
+  
 
 7) As in the video, use either math or code (add a Java Class) to argue for or against H0
 
 References: 
 https://www.thoughtco.com/null-hypothesis-vs-alternative-hypothesis-3126413
+
+
+

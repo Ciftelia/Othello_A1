@@ -1,6 +1,7 @@
 package ca.yorku.eecs3311.assignment1.othello;
 
 public abstract class OthelloController {
+	
 	protected Othello othello;
     protected Player player1;
     protected Player player2;
@@ -28,5 +29,7 @@ public abstract class OthelloController {
                 + othello.getWinner() + " won\n";
         System.out.println(s);
     }
+	
+	
 
 }

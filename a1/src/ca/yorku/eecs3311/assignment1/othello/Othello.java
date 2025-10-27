@@ -20,8 +20,7 @@ public class Othello {
 	private int numMoves = 0;
 	private final OthelloBoard board;
 	
-	
-	
+
 	/*
 	 * Constructor
 	 */
@@ -29,7 +28,7 @@ public class Othello {
 	public Othello() {
 		this.board = new OthelloBoard(DIMENSION);
 	}
-
+	
 	/**
 	 * return P1,P2 or EMPTY depending on who moves next.
 	 * 
@@ -49,7 +48,7 @@ public class Othello {
 	 * @param col
 	 * @return whether the move was successfully made.
 	 */
-    public boolean move(int row, int col) {
+	public boolean move(int row, int col) {
         if (isGameOver()) {return false;}
 
         boolean move = board.move(row, col, whosTurn);

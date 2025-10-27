@@ -13,7 +13,7 @@ package ca.yorku.eecs3311.assignment1.othello;
  * 
  *
  */
-public class OthelloControllerRandomVSRandom extends OthelloController {
+public class OthelloControllerRandomVSRandom {
 	/**
 	 * Run main to execute the simulation and print out the two line results.
 	 * Output looks like 
@@ -35,8 +35,7 @@ public class OthelloControllerRandomVSRandom extends OthelloController {
 		this.player2 = new PlayerRandom(this.othello, OthelloBoard.P2);
 	}
 	
-	@Override
-	public void play() {
+	public char play() {
 		while (!othello.isGameOver()) {
 //			System.out.println(othello.getBoardString());
 			Move move = null;
@@ -54,6 +53,7 @@ public class OthelloControllerRandomVSRandom extends OthelloController {
 				break;
 			}
 		}
+		return othello.getWinner();
 	}
 	
 	
@@ -63,8 +63,7 @@ public class OthelloControllerRandomVSRandom extends OthelloController {
 		
 		for (int i = 0; i < numGames; i++) {
 //			System.out.println("Game Number: " + i);
-			oc.play();
-			if (oc.othello.getWinner() == OthelloBoard.P1) {
+			if (oc.play() == OthelloBoard.P1) {
 				p1wins++;
 			}
 			else {
