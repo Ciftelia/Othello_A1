@@ -6,7 +6,13 @@ package ca.yorku.eecs3311.assignment1.othello;
  * P2=Greedy. What is your conclusion, which is the better strategy?
  *
  */
-public class OthelloControllerRandomVSGreedy {
+public class OthelloControllerRandomVSGreedy extends OthelloController {
+	
+	@Override
+	protected void play() {
+		// TODO Auto-generated method stub
+		
+	}
 
     /**
      * Run main to execute the simulation and print out the two line results.

@@ -11,7 +11,6 @@ import java.util.Random;
  */
 public class PlayerRandom extends Player {
 	private Random rand = new Random();
-	private char other;
 
 	public PlayerRandom(Othello othello, char player) {
 		super(othello, player);

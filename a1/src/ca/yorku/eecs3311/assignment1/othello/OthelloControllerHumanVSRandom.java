@@ -5,7 +5,7 @@ package ca.yorku.eecs3311.assignment1.othello;
  * the computer P2. The computer, P2 uses a random strategy. 
  * 
  */
-public class OthelloControllerHumanVSRandom {
+public class OthelloControllerHumanVSRandom extends OthelloController {
 	
 	/**
 	 * Run main to play a Human (P1) against the computer P2. 
@@ -15,8 +15,6 @@ public class OthelloControllerHumanVSRandom {
 
 	 * @param args
 	 */
-	protected Othello othello;
-	PlayerHuman player1; PlayerRandom player2;
 
 	/**
 	 * Constructs a new OthelloController with a new Othello game, ready to play
@@ -29,7 +27,8 @@ public class OthelloControllerHumanVSRandom {
 		this.player2 = new PlayerRandom(this.othello, OthelloBoard.P2);
 	}
 	
-	private void play() {
+	@Override
+	protected void play() {
 		while (!othello.isGameOver()) {
 			this.report();
 
@@ -51,28 +50,6 @@ public class OthelloControllerHumanVSRandom {
 		}
 		this.reportFinal();
 		
-	}
-	
-	private void reportMove(char whosTurn, Move move) {
-		System.out.println(whosTurn + " makes move " + move + "\n");
-	}
-
-	private void report() {
-		
-		String s = othello.getBoardString() + OthelloBoard.P1 + ":" 
-				+ othello.getCount(OthelloBoard.P1) + " "
-				+ OthelloBoard.P2 + ":" + othello.getCount(OthelloBoard.P2) + "  " 
-				+ othello.getWhosTurn() + " moves next";
-		System.out.println(s);
-	}
-
-	private void reportFinal() {
-		
-		String s = othello.getBoardString() + OthelloBoard.P1 + ":" 
-				+ othello.getCount(OthelloBoard.P1) + " "
-				+ OthelloBoard.P2 + ":" + othello.getCount(OthelloBoard.P2) 
-				+ "  " + othello.getWinner() + " won\n";
-		System.out.println(s);
 	}
 	public static void main(String[] args) {
 		
