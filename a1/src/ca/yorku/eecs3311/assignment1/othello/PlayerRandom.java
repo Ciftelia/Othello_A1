@@ -9,56 +9,33 @@ import java.util.Random;
  * of them.
  *
  */
-public class PlayerRandom {
+public class PlayerRandom extends Player {
 	private Random rand = new Random();
-	private Othello othello;
-	private char player;
-	private OthelloBoard othelloBoard;
 	private char other;
-	private char empty;
 
 	public PlayerRandom(Othello othello, char player) {
-		
-		this.othello = othello;
-		this.othelloBoard = othello.getboard();
-		this.player = player;
-		this.other = (player == 'X') ? 'O' : 'X';
+		super(othello, player);
 	}
 
 	public Move getMove() {
-		// Create list to store all possible moves
 		ArrayList<int[]> list = new ArrayList<>();
-		// Create a 2D list to store all directions
-		int[][] directions = {
-			    {-1, -1}, {-1, 0}, {-1, 1},
-			    {0, -1},           {0, 1},
-			    {1, -1},  {1, 0},  {1, 1}
-			};
-		for (int row = 0; row < othelloBoard.getDimension(); row++) {
-			for (int col = 0; col < othelloBoard.getDimension(); col++) {
-				if (othelloBoard.get(row, col) != OthelloBoard.EMPTY) continue;
-				boolean flag = false;
-				for (int[] direction: directions) {
-					int newRow = row + direction[0]; int newCol = col + direction[1];
-					if (newRow < 0 || newRow >= othelloBoard.getDimension() || newCol < 0 || newCol >= othelloBoard.getDimension()) continue;
-					if (othelloBoard.get(newRow, newCol) != this.other) continue;
-					
-					newCol+=direction[1]; newRow+=direction[0];
-					while (newRow >= 0 && newRow < othelloBoard.getDimension()  && newCol >= 0 && newCol < othelloBoard.getDimension()) {
-						char c = othelloBoard.get(newRow, newCol);
-						if (c == OthelloBoard.EMPTY) break;
-	                    if (c == this.player) {
-	                    	flag = true;
-	                        break;
-	                    }
-						newRow+=direction[0]; newCol+=direction[1];
-					}
-					if (flag) break;
-				}
-				if (flag) list.add(new int[] {row,col});
-			}
-		}
-		if (list.isEmpty()) return null;
+		if (othello == null) return null;
+        OthelloBoard board = othello.getboard();
+        if (board == null) return null;
+
+        final int dim = board.getDimension();
+
+        for (int r = 0; r < dim; r++) {
+            for (int c = 0; c < dim; c++) {
+                if (board.get(r, c) != OthelloBoard.EMPTY) continue;
+
+                int flips = potentialFlips(board, r, c, player);
+                if (flips <= 0) continue; // not a legal move
+
+                list.add(new int[] {r, c});
+            }
+        }
+        if (list.isEmpty()) return null;
 	    int[] move = list.get(rand.nextInt(list.size()));
 	    return new Move(move[0], move[1]);
 	}

@@ -9,19 +9,13 @@ import java.io.InputStreamReader;
  * 
  *
  */
-public class PlayerHuman {
-	
+public class PlayerHuman extends Player {
 	private static final String INVALID_INPUT_MESSAGE = "Invalid number, please enter 1-8";
 	private static final String IO_ERROR_MESSAGE = "I/O Error";
 	private static BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-	private Othello othello;
-	private char player;
-
 	public PlayerHuman(Othello othello, char player) {
-		
-		this.othello = othello;
-		this.player = player;
+		super(othello, player);
 	}
 
 	public Move getMove() {
@@ -45,7 +39,7 @@ public class PlayerHuman {
 					System.out.println(INVALID_INPUT_MESSAGE);
 				}
 			} catch (IOException e) {
-				System.out.println(INVALID_INPUT_MESSAGE);
+				System.out.println(IO_ERROR_MESSAGE);
 				break;
 			} catch (NumberFormatException e) {
 				System.out.println(INVALID_INPUT_MESSAGE);
