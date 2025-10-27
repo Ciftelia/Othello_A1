@@ -3,52 +3,60 @@ package ca.yorku.eecs3311.assignment1.othello;
 import java.util.Random;
 
 /**
- * Capture an Othello game. This includes an OthelloBoard as well as knowledge
- * of how many moves have been made, whosTurn is next (OthelloBoard.P1 or
- * OthelloBoard.P2). It knows how to make a move using the board and can tell
- * you statistics about the game, such as how many tokens P1 has and how many
- * tokens P2 has. It knows who the winner of the game is, and when the game is
- * over.
- * 
- * See the following for a short, simple introduction.
- * https://www.youtube.com/watch?v=Ol3Id7xYsY4
+ * Represents a complete Othellogame, including the board state, 
+ * the active player, and the number of moves made so far. 
  *
+ * This class enforces the rules of Othello. Player 1 ('X') always moves first.
+ * A move is valid only if it flips at least one opponent disc. After a 
+ * successful move, the game checks whether the opponent has any available moves.
+ * If both players are unable to make a move, the game ends.
+ *
+ * This class manages game flow, while the OthelloBoard class performs 
+ * legality checks, flipping operations, and score calculations.
  */
 public class Othello {
-	public static final int DIMENSION = 8; // This is an 8x8 game
-	private char whosTurn = OthelloBoard.P1; // P1 moves first!
-	private int numMoves = 0;
-	private final OthelloBoard board;
-	
-	
-	
-	/*
-	 * Constructor
-	 */
-	
-	public Othello() {
-		this.board = new OthelloBoard(DIMENSION);
-	}
 
-	/**
-	 * return P1,P2 or EMPTY depending on who moves next.
-	 * 
-	 * @return P1, P2 or EMPTY
-	 */
-	public char getWhosTurn() {
-		if (isGameOver()) {return OthelloBoard.EMPTY;}
-		else {return whosTurn;}
-	}
+    /** The standard board size for Othello: 8 rows and 8 columns. */
+    public static final int DIMENSION = 8;
 
-	/**
-	 * Attempt to make a move for P1 or P2 (depending on whos turn it is) at
-	 * position row, col. A side effect of this method is modification of whos turn
-	 * and the move count.
-	 * 
-	 * @param row
-	 * @param col
-	 * @return whether the move was successfully made.
-	 */
+    /** Tracks who has the next turn. P1 begins the game. */
+    private char whosTurn = OthelloBoard.P1;
+
+    /** Total number of valid moves successfully executed. */
+    private int numMoves = 0;
+
+    /** The board containing current token placement and move logic. */
+    private final OthelloBoard board;
+    
+    /**
+     * Constructs a new Othello game with a fresh board initialized 
+     * to the standard starting configuration.
+     */
+    public Othello() {
+        this.board = new OthelloBoard(DIMENSION);
+    }
+    
+    /**
+     * Returns which player is next to move.
+     * Returns EMPTY if the game has already finished.
+     *
+     * @return P1, P2, or EMPTY if the game is over
+     */
+    public char getWhosTurn() {
+        if (isGameOver()) {return OthelloBoard.EMPTY;}
+        else {return whosTurn;}
+    }
+
+    /**
+     * Attempts to make a move at the specified board position on behalf of 
+     * the current player. A move is only valid if it flips at least one 
+     * opponent disc. If valid, the turn may switch to the opponent depending 
+     * on move availability.
+     *
+     * @param row row index for the move (0-based)
+     * @param col column index for the move (0-based)
+     * @return true if the move was legal and completed; false otherwise
+     */
     public boolean move(int row, int col) {
         if (isGameOver()) {return false;}
 
@@ -68,78 +76,89 @@ public class Othello {
         return true;
     }
 
-	/**
-	 * 
-	 * @param player P1 or P2
-	 * @return the number of tokens for player on the board
-	 */
-	public int getCount(char player) {
-		return board.getCount(player);
-	}
+    /**
+     * Returns the number of discs currently on the board that belong 
+     * to the specified player.
+     *
+     * @param player P1 or P2
+     * @return count of discs belonging to that player
+     */
+    public int getCount(char player) {
+        return board.getCount(player);
+    }
 
-	/**
-	 * Returns the winner of the game.
-	 * 
-	 * @return P1, P2 or EMPTY for no winner, or the game is not finished.
-	 */
-	public char getWinner() {
-		
-		if (!isGameOver()) {
-			return OthelloBoard.EMPTY;
-		}
-		
-		else {
-			int a = board.getCount(OthelloBoard.P1);
-			int b = board.getCount(OthelloBoard.P2);
-			
-			if (a > b) {return OthelloBoard.P1;}
-			else if (b > a) {return OthelloBoard.P2;}
-			else {return OthelloBoard.EMPTY;}
-		}
-	}
+    /**
+     * Identifies the winner when the game has ended.
+     * If the number of discs is equal or the game is not finished,
+     * EMPTY is returned.
+     *
+     * @return P1, P2, or EMPTY if tied or game not complete
+     */
+    public char getWinner() {
+        
+        if (!isGameOver()) {
+            return OthelloBoard.EMPTY;
+        }
+        
+        int a = board.getCount(OthelloBoard.P1);
+        int b = board.getCount(OthelloBoard.P2);
+        
+        if (a > b) {return OthelloBoard.P1;}
+        else if (b > a) {return OthelloBoard.P2;}
+        else {return OthelloBoard.EMPTY;}
+    }
 
-	/**
-	 * 
-	 * @return whether the game is over (no player can move next)
-	 */
-	public boolean isGameOver() {
-		return board.hasMove() == OthelloBoard.EMPTY;
-	}
+    /**
+     * Indicates whether the game has ended. The game is over only when 
+     * neither player has any valid moves remaining.
+     *
+     * @return true if no player can move; false otherwise
+     */
+    public boolean isGameOver() {
+        return board.hasMove() == OthelloBoard.EMPTY;
+    }
 
-	/**
-	 * 
-	 * @return a string representation of the board.
-	 */
-	public String getBoardString() {
-		return board.toString();
-	}
-	
-	
-	public OthelloBoard getboard() {
-		return board;
-	}
+    /**
+     * Provides a visual string representation of the current game board.
+     *
+     * @return formatted board layout
+     */
+    public String getBoardString() {
+        return board.toString();
+    }
+    
+    /**
+     * Provides access to the underlying OthelloBoard object.
+     *
+     * @return the active game board
+     */
+    public OthelloBoard getboard() {
+        return board;
+    }
 
-	/**
-	 * run this to test the current class. We play a completely random game. DO NOT
-	 * MODIFY THIS!! See the assignment page for sample outputs from this.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-		Random rand = new Random();
+    /**
+     * A simple demonstration that runs a completely random game,
+     * printing moves and board updates after each valid move.
+     * 
+     * Do not modify this method. It exists solely for testing purposes.
+     *
+     * @param args unused command-line arguments
+     */
+    public static void main(String[] args) {
+        
+        Random rand = new Random();
 
-		Othello o = new Othello();
-		System.out.println(o.getBoardString());
-		while (!o.isGameOver()) {
-			int row = rand.nextInt(8);
-			int col = rand.nextInt(8);
+        Othello o = new Othello();
+        System.out.println(o.getBoardString());
+        while (!o.isGameOver()) {
+            int row = rand.nextInt(8);
+            int col = rand.nextInt(8);
 
-			if (o.move(row, col)) {
-				System.out.println("makes move (" + row + "," + col + ")");
-				System.out.println(o.getBoardString() + o.getWhosTurn() + " moves next");
-			}
-		}
+            if (o.move(row, col)) {
+                System.out.println("makes move (" + row + "," + col + ")");
+                System.out.println(o.getBoardString() + o.getWhosTurn() + " moves next");
+            }
+        }
 
-	}
+    }
 }
